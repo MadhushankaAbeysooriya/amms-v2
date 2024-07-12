@@ -9,15 +9,18 @@ use App\Http\Controllers\CronController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DSDivisionController;
+use App\Http\Controllers\MyLocationController;
 use App\Http\Controllers\LoginDetailController;
 use App\Http\Controllers\master\ItemController;
 use App\Http\Controllers\master\MenuController;
 use App\Http\Controllers\AnnualDemandController;
+use App\Http\Controllers\IssueVoucherController;
 use App\Http\Controllers\master\BrandController;
 use App\Http\Controllers\SearchDetailController;
 use App\Http\Controllers\UserHospitalController;
@@ -27,9 +30,14 @@ use App\Http\Controllers\master\QuarterController;
 use App\Http\Controllers\master\LocationController;
 use App\Http\Controllers\master\MenuItemController;
 use App\Http\Controllers\master\SupplierController;
+use App\Http\Controllers\RequisitionBookController;
+use App\Http\Controllers\CustomerIssuanceController;
+use App\Http\Controllers\CustomerReceivedController;
 use App\Http\Controllers\master\RationDateController;
 use App\Http\Controllers\master\RationTimeController;
 use App\Http\Controllers\master\RationTypeController;
+use App\Http\Controllers\master\RationYearController;
+use App\Http\Controllers\DemandFromCustomerController;
 use App\Http\Controllers\DemandFromLocationController;
 use App\Http\Controllers\master\MeasurementController;
 use App\Http\Controllers\master\PaneltyRuleController;
@@ -38,17 +46,10 @@ use App\Http\Controllers\master\ItemCategoryController;
 use App\Http\Controllers\master\LocationTypeController;
 use App\Http\Controllers\ReceiptFromLocationController;
 use App\Http\Controllers\master\RationCategoryController;
+use App\Http\Controllers\CondemnationCertificateController;
 use App\Http\Controllers\master\QuarterItemPriceController;
 use App\Http\Controllers\master\ApprovedUnitPriceController;
 use App\Http\Controllers\master\RationSubCategoryController;
-use App\Http\Controllers\master\RationYearController;
-use App\Http\Controllers\RequisitionBookController;
-use App\Http\Controllers\IssueVoucherController;
-use App\Http\Controllers\CondemnationCertificateController;
-use App\Http\Controllers\DemandFromCustomerController;
-use App\Http\Controllers\CustomerIssuanceController;
-use App\Http\Controllers\CustomerReceivedController;
-use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,5 +80,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/change-password', [ChangePasswordController::class,'store'])->name('change.password');
 
     Route::get('/logindetails',[LoginDetailController::class,'index'])->name('logindetails.index');
+
+    //Route::get('/my-locations',[MyLocationController::class,'index'])->name('my_locations.index');
+
+    Route::resource('my-locations', MyLocationController::class);
 
 });

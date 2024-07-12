@@ -30,18 +30,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $demandFromLocations=DemandFromLocation::get();
-        return view('home', compact('demandFromLocations'));
+
     }
 
-    public function searchdetail(Request $request)
+    /*public function searchdetail(Request $request)
     {
         $reply = 0;
         $message ='';
 
-        $user = User::find(Auth::user()->id);        
+        $user = User::find(Auth::user()->id);
 
-        if($user->search_count >= 20 && Auth::user()->can('search-details')) 
+        if($user->search_count >= 20 && Auth::user()->can('search-details'))
         {
             //dd('in if');
             $message = "You have exceeded search per day";
@@ -57,7 +56,7 @@ class HomeController extends Controller
                         ->get();
 
             $user->update(['search_count' => $user->search_count++]);
-            
+
             return view('home', compact('message','reply','searchDetails'));
         }
         elseif($user->search_count >= 5)
@@ -76,14 +75,14 @@ class HomeController extends Controller
                         ->get();
 
             $user->update(['search_count' => $user->search_count++]);
-            
+
             return view('home', compact('message','reply','searchDetails'));
-            
+
         }else
         {
             //dd('in else');
             $user->update(['search_count' => $user->search_count++]);
-        
+
             // Check if the user has a valid access token in the session
             $currentAccessToken = Session::get('access_token');
 
@@ -92,7 +91,7 @@ class HomeController extends Controller
                 $currentAccessToken = $this->getToken();
 
                 if ($currentAccessToken) {
-                    // Store the new access token in the session                
+                    // Store the new access token in the session
                     Session::put('access_token', $currentAccessToken);
                 } else {
                     // Handle the case where obtaining a new token failed
@@ -101,17 +100,17 @@ class HomeController extends Controller
             }
 
             //$currentAccessToken = $this->refreshAccessToken($currentAccessToken);
-            
+
 
             // Now that you have a valid access token, perform the search
             $responseData = $this->search_person($currentAccessToken, $request->search);
             //dd($responseData);
 
-            
+
 
             if(!empty($responseData) && $responseData !== "Null")
-            {            
-                $reply = 1;            
+            {
+                $reply = 1;
             }
 
             //dd($reply);
@@ -132,13 +131,13 @@ class HomeController extends Controller
             $user->update(['search_count' => $user->search_count++]);
 
             return view('home', compact('message','reply','responseData','searchDetails'));
-        }        
-    }
+        }
+    }*/
 
     // public function getToken()
     // {
     //     $url = 'https://armyapps.army.lk/ashi_api/api/login';
-        
+
     //     // Define the query parameters (email and password)
     //     $params = [
     //         'email' => 'admin@gmail.com',
@@ -167,7 +166,7 @@ class HomeController extends Controller
     //         // Handle any exceptions that may occur during the request
     //         return response()->json(['error' => $e->getMessage()], 500); // Internal Server Error
     //     }
-    // }    
+    // }
 
     public function getToken()
     {
@@ -207,12 +206,12 @@ class HomeController extends Controller
         }
     }
 
-   
+
 
     public function refreshAccessToken($currentAccessToken)
     {
         $url = 'https://armyapps.army.lk/ashi_api/api/refresh';
-        
+
         try {
             // Send a POST request to refresh the token
             // $response = Http::post($url, [
@@ -231,15 +230,15 @@ class HomeController extends Controller
                 'verify' => false,
 
             ]);
-            
+
             // Check if the response is successful (status code 200)
             if ($response->getStatusCode() === 200) {
                 // Parse the JSON response
                 $data = json_decode($response->getBody(), true);
-        
+
                 // Extract the new access token
                 $newAccessToken = $data['access_token'];
-        
+
                 return $newAccessToken;
             } else {
                 // Handle the case where the request was not successful
@@ -254,7 +253,7 @@ class HomeController extends Controller
     public function logout($currentAccessToken)
     {
         $url = 'https://armyapps.army.lk/ashi_api/api/logout';
-        
+
         try {
 
             $client = new Client();
@@ -264,15 +263,15 @@ class HomeController extends Controller
                 ],
                 'verify' => false,
             ]);
-            
+
             // Check if the response is successful (status code 200)
             if ($response->getStatusCode() === 200) {
                 // Parse the JSON response
                 $data = json_decode($response->getBody(), true);
-        
+
                 // Extract the new access token
                 $status = $data['status'];
-        
+
                 return $status;
             } else {
                 // Handle the case where the request was not successful
@@ -292,7 +291,7 @@ class HomeController extends Controller
         $params = [
             'nic' => $nic
         ];
-        
+
         try {
 
             $client = new Client();
@@ -303,16 +302,16 @@ class HomeController extends Controller
                 'json' => $params,
                 'verify' => false,
             ]);
-            
+
             // Check if the response is successful (status code 200)
             if ($response->getStatusCode() === 200) {
                 // Parse the JSON response
                 $data = json_decode($response->getBody(), true);
-        
+
                 // Extract the new access token
                 // $status = $data['status'];
                 $person = isset($data['person']) ? $data['person'] : null;
-        
+
                 return $person;
             } else {
                 // Handle the case where the request was not successful
