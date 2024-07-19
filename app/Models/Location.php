@@ -46,10 +46,10 @@ class Location extends Model
     }
 
     // Override newQuery to return an empty query builder
-    public function newQuery()
+    /*public function newQuery()
     {
         return new Builder(new \Illuminate\Database\Query\Builder(
             \Illuminate\Database\Connection::resolveConnection($this->getConnectionName())
         ));
-    }
+    }*/
 }
